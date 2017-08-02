@@ -24,7 +24,6 @@ namespace Tests
 
             //Assert
             Assert.AreNotEqual("Walk the dog", newTask.GetName());
-
         }
     }
 }
