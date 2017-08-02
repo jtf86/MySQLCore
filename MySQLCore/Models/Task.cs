@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
 
-namespace MySqlCore.Models
+namespace MySQLCore.Models
 {
     public class Task
     {
@@ -27,10 +27,10 @@ namespace MySqlCore.Models
 
         public void Save()
         {
-            AppDb db = new AppDb();
-            db.conn.Open();
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
 
-            var cmd = db.conn.CreateCommand() as MySqlCommand;
+            var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"INSERT INTO `tasks` (`name`) VALUES (@name);";
 
             MySqlParameter name = new MySqlParameter();
@@ -39,9 +39,10 @@ namespace MySqlCore.Models
             cmd.Parameters.Add(name);
 
             cmd.ExecuteNonQueryAsync();
+            _id = (int) cmd.LastInsertedId;
+
             Console.Write("Id inserted is ");
             Console.WriteLine(cmd.LastInsertedId);
-            _id = (int) cmd.LastInsertedId;
             Console.Write("Id assigned is ");
             Console.WriteLine(_id);
 
@@ -51,10 +52,10 @@ namespace MySqlCore.Models
         {
             List<Task> allTasks = new List<Task> {};
 
-            AppDb db = new AppDb();
-            db.conn.Open();
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
 
-            var cmd = db.conn.CreateCommand() as MySqlCommand;
+            var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT * FROM tasks;";
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -73,10 +74,10 @@ namespace MySqlCore.Models
 
         public static void DeleteAll()
         {
-            AppDb db = new AppDb();
-            db.conn.Open();
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
 
-            var cmd = db.conn.CreateCommand() as MySqlCommand;
+            var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"DELETE FROM tasks;";
             cmd.ExecuteNonQuery();
 

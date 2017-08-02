@@ -1,23 +1,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
-using MySqlCore.Models;
+using MySQLCore.Models;
 
-namespace Tests
+namespace MySQLCore.Tests
 {
 
     [TestClass]
     public class TaskTests : IDisposable
     {
+
         public void Dispose()
         {
             Task.DeleteAll();
         }
 
-        // public TaskTests()
-        // {
-        //     DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=mysqlcore;";
-        // }
 
         [TestMethod]
         public void VerifyName_True()
@@ -49,7 +46,7 @@ namespace Tests
             arrangedList.Add(newTask);
             // Act
             List<Task> allTasks = Task.GetAll();
-            
+
             Console.Write("the id from the arranged list is ");
             Console.WriteLine(arrangedList[0].GetId());
             Console.Write("the id from the recovred list is ");
