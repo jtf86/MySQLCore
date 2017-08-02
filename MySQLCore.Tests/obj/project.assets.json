@@ -9686,16 +9686,16 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\Tests.csproj",
-      "projectName": "Tests",
-      "projectPath": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\Tests.csproj",
+      "projectUniqueName": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\MySQLCore.Tests.csproj",
+      "projectName": "MySQLCore.Tests",
+      "projectPath": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\MySQLCore.Tests.csproj",
       "outputPath": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
       ],
       "files": {
-        "lib/netcoreapp1.1/Tests.dll": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\bin\\placeholder\\netcoreapp1.1\\Tests.dll"
+        "lib/netcoreapp1.1/MySQLCore.Tests.dll": "C:\\Users\\jfran\\Desktop\\MySQLCore\\MySQLCore.Tests\\bin\\placeholder\\netcoreapp1.1\\MySQLCore.Tests.dll"
       },
       "frameworks": {
         "netcoreapp1.1": {
