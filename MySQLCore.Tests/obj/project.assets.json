@@ -1173,6 +1173,25 @@
           "lib/netcoreapp1.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {}
         }
       },
+      "MySqlConnector/0.24.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Buffers": "4.3.0",
+          "System.Data.Common": "4.3.0",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.NameResolution": "4.3.0",
+          "System.Net.Security": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Threading.Tasks.Extensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/MySqlConnector.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/MySqlConnector.dll": {}
+        }
+      },
       "NETStandard.Library/1.6.1": {
         "type": "package",
         "dependencies": {
@@ -1653,6 +1672,25 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Console.dll": {}
+        }
+      },
+      "System.Data.Common/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.2/System.Data.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.2/System.Data.Common.dll": {}
         }
       },
       "System.Diagnostics.Contracts/4.3.0": {
@@ -3435,7 +3473,8 @@
         "framework": ".NETCoreApp,Version=v1.1",
         "dependencies": {
           "Microsoft.AspNetCore": "1.1.2",
-          "Microsoft.NETCore.App": "1.1.2"
+          "Microsoft.NETCore.App": "1.1.2",
+          "MySqlConnector": "0.24.0"
         },
         "compile": {
           "bin/placeholder/netcoreapp1.1/MySQLCore.dll": {}
@@ -4585,6 +4624,18 @@
         "mstest.testframework.nuspec"
       ]
     },
+    "MySqlConnector/0.24.0": {
+      "sha512": "gjdMDGU+KznHQ1ja8xZ9LhGHxmem4dsyxa1UQMzbUeTGh2iFRBTYFgBnoT+42THJ+9TgnWd85V20qI+wBTWWlg==",
+      "type": "package",
+      "path": "mysqlconnector/0.24.0",
+      "files": [
+        "lib/net45/MySqlConnector.dll",
+        "lib/net46/MySqlConnector.dll",
+        "lib/netstandard1.3/MySqlConnector.dll",
+        "mysqlconnector.0.24.0.nupkg.sha512",
+        "mysqlconnector.nuspec"
+      ]
+    },
     "NETStandard.Library/1.6.1": {
       "sha512": "0a9d/GRz5UIsOQCnkdHKJTkiB5bx8rIZ5K7BnDbfOG3e67Yoz7/I06fIFZmLAPzJVowJG7OCmi2YaBFmDv93jA==",
       "type": "package",
@@ -5435,6 +5486,55 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "System.Data.Common/4.3.0": {
+      "sha512": "vsh39yxWpH0LpqiDJB5pyuoNtQT9hQdAxSdmky7KrpZrMarfGnXVAN2P3cXRLWZOW5efQCWTgM5rQNxAyX1Q3Q==",
+      "type": "package",
+      "path": "system.data.common/4.3.0",
+      "files": [
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net451/System.Data.Common.dll",
+        "lib/netstandard1.2/System.Data.Common.dll",
+        "lib/portable-net451+win8+wp8+wpa81/System.Data.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net451/System.Data.Common.dll",
+        "ref/netstandard1.2/System.Data.Common.dll",
+        "ref/netstandard1.2/System.Data.Common.xml",
+        "ref/netstandard1.2/de/System.Data.Common.xml",
+        "ref/netstandard1.2/es/System.Data.Common.xml",
+        "ref/netstandard1.2/fr/System.Data.Common.xml",
+        "ref/netstandard1.2/it/System.Data.Common.xml",
+        "ref/netstandard1.2/ja/System.Data.Common.xml",
+        "ref/netstandard1.2/ko/System.Data.Common.xml",
+        "ref/netstandard1.2/ru/System.Data.Common.xml",
+        "ref/netstandard1.2/zh-hans/System.Data.Common.xml",
+        "ref/netstandard1.2/zh-hant/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/System.Data.Common.dll",
+        "ref/portable-net451+win8+wp8+wpa81/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/de/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/es/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/fr/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/it/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ja/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ko/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/ru/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/zh-hans/System.Data.Common.xml",
+        "ref/portable-net451+win8+wp8+wpa81/zh-hant/System.Data.Common.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.data.common.4.3.0.nupkg.sha512",
+        "system.data.common.nuspec"
       ]
     },
     "System.Diagnostics.Contracts/4.3.0": {

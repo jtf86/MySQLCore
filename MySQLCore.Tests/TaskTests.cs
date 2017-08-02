@@ -1,11 +1,24 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MySQLCore.Models;
+using System.Collections.Generic;
+using System;
+using MySqlCore.Models;
 
 namespace Tests
 {
+
     [TestClass]
-    public class UnitTest1
+    public class TaskTests : IDisposable
     {
+        public void Dispose()
+        {
+            Task.DeleteAll();
+        }
+
+        // public TaskTests()
+        // {
+        //     DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=mysqlcore;";
+        // }
+
         [TestMethod]
         public void VerifyName_True()
         {
@@ -24,6 +37,26 @@ namespace Tests
 
             //Assert
             Assert.AreNotEqual("Walk the dog", newTask.GetName());
+        }
+
+        [TestMethod]
+        public void SaveToDatabase_True()
+        {
+            // Arrange
+            Task newTask = new Task("Make DB Connection Work");
+            newTask.Save();
+            List<Task> arrangedList = new List<Task> {};
+            arrangedList.Add(newTask);
+            // Act
+            List<Task> allTasks = Task.GetAll();
+            
+            Console.Write("the id from the arranged list is ");
+            Console.WriteLine(arrangedList[0].GetId());
+            Console.Write("the id from the recovred list is ");
+            Console.WriteLine(allTasks[0].GetId());
+
+            // Assert
+            CollectionAssert.AreEqual(arrangedList, allTasks);
         }
     }
 }
