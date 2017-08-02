@@ -1,8 +1,0 @@
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\bin\Debug\netcoreapp1.1\MySQLCore.deps.json
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\bin\Debug\netcoreapp1.1\MySQLCore.runtimeconfig.json
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\bin\Debug\netcoreapp1.1\MySQLCore.runtimeconfig.dev.json
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\bin\Debug\netcoreapp1.1\MySQLCore.dll
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\bin\Debug\netcoreapp1.1\MySQLCore.pdb
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\obj\Debug\netcoreapp1.1\MySQLCore.AssemblyInfo.cs
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\obj\Debug\netcoreapp1.1\MySQLCore.dll
-C:\Users\jfran\Desktop\MySQLCore\MySQLCore\obj\Debug\netcoreapp1.1\MySQLCore.pdb
