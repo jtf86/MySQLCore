@@ -15,6 +15,10 @@ namespace MySQLCore.Tests
             Task.DeleteAll();
         }
 
+        public TaskTests()
+        {
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=mysqlcore_test;";
+        }
 
         [TestMethod]
         public void VerifyName_True()
