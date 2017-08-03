@@ -38,7 +38,7 @@ namespace MySQLCore.Models
             name.Value = this._name;
             cmd.Parameters.Add(name);
 
-            cmd.ExecuteNonQueryAsync();
+            cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
 
             Console.Write("Id inserted is ");

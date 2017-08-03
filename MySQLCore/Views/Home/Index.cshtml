@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tasks</title>
+    </head>
+    <body>
+        <h2>Here are the tasks.</h2>
+        @foreach (var task in Model)
+        {
+            <h4>@task.GetName()</h4>
+        }
+        <hr>
+        <h3>Would you like to add a new task?</h3>
+        <form action="/create" method="post">
+            <label for="taskname">Add new task</label>
+            <input type="text" name="taskname" value="">
+            <button type="submit" name="button">Submit</button>
+        </form>
+    </body>
+</html>
