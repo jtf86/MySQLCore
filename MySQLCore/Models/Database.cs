@@ -1,6 +1,4 @@
-using System;
 using MySql.Data.MySqlClient;
-using MySQLCore;
 
 namespace MySQLCore.Models
 {
