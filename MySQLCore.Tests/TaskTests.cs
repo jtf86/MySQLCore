@@ -23,7 +23,7 @@ namespace MySQLCore.Tests
             //Arrange
             Task newTask = new Task("Walk the dog");
             //Assert
-            Assert.AreEqual("Walk the dog", newTask.GetName());
+            Assert.AreEqual("Walk the dog", newTask.GetDescription());
         }
         [TestMethod]
         public void VerifyName_False()
@@ -31,7 +31,7 @@ namespace MySQLCore.Tests
             //Arrange
             Task newTask = new Task("Mow the lawn");
             //Assert
-            Assert.AreNotEqual("Walk the dog", newTask.GetName());
+            Assert.AreNotEqual("Walk the dog", newTask.GetDescription());
         }
         [TestMethod]
         public void SaveToDatabase_True()

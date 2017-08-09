@@ -5,18 +5,18 @@ namespace MySQLCore.Models
 {
     public class Task
     {
-        private string _name;
+        private string _description;
         private int _id;
 
-        public Task(string name, int id = 0)
+        public Task(string description, int id = 0)
         {
-            _name = name;
+            _description = description;
             _id = id;
         }
 
-        public string GetName()
+        public string GetDescription()
         {
-            return _name;
+            return _description;
         }
 
         public int GetId()
@@ -30,15 +30,15 @@ namespace MySQLCore.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO `tasks` (`name`) VALUES (@name);";
+            cmd.CommandText = @"INSERT INTO `tasks` (`name`) VALUES (@description);";
 
-            MySqlParameter name = new MySqlParameter();
-            name.ParameterName = "@name";
-            name.Value = this._name;
-            cmd.Parameters.Add(name);
+            MySqlParameter description = new MySqlParameter();
+            description.ParameterName = "@description";
+            description.Value = this._description;
+            cmd.Parameters.Add(description);
 
             cmd.ExecuteNonQuery();
-            _id = (int) cmd.LastInsertedId;
+            _id = (int)cmd.LastInsertedId;
         }
 
         public static void Delete(int id)
@@ -59,18 +59,18 @@ namespace MySQLCore.Models
 
         public static List<Task> GetAll()
         {
-            List<Task> allTasks = new List<Task> {};
+            List<Task> allTasks = new List<Task> { };
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT * FROM tasks;";
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            while(rdr.Read())
+            while (rdr.Read())
             {
-              int taskId = rdr.GetInt32(0);
-              string taskName = rdr.GetString(1);
-              Task newTask = new Task(taskName, taskId);
-              allTasks.Add(newTask);
+                int taskId = rdr.GetInt32(0);
+                string taskName = rdr.GetString(1);
+                Task newTask = new Task(taskName, taskId);
+                allTasks.Add(newTask);
             }
             return allTasks;
         }
@@ -79,7 +79,7 @@ namespace MySQLCore.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM `tasks` WHERE id = (@thisId);";
+            cmd.CommandText = @"SELECT * FROM `tasks` WHERE id = @thisId;";
 
             MySqlParameter thisId = new MySqlParameter();
             thisId.ParameterName = "@thisId";
@@ -91,10 +91,10 @@ namespace MySQLCore.Models
             int taskId = 0;
             string taskName = "";
 
-            while(rdr.Read())
+            while (rdr.Read())
             {
-              taskId = rdr.GetInt32(0);
-              taskName = rdr.GetString(1);
+                taskId = rdr.GetInt32(0);
+                taskName = rdr.GetString(1);
             }
             Task newTask = new Task(taskName, taskId);
             return newTask;
@@ -111,20 +111,23 @@ namespace MySQLCore.Models
 
         public override bool Equals(System.Object otherTask)
         {
-          if (!(otherTask is Task))
-          {
-            return false;
-          }
-          else
-          {
-            Task newTask = (Task) otherTask;
-            return this.GetId().Equals(newTask.GetId());
-          }
+            if (!(otherTask is Task))
+            {
+                return false;
+            }
+            else
+            {
+                Task newTask = (Task)otherTask;
+                bool idEquality = (this.GetId() == newTask.GetId());
+                bool descriptionEquality = (this.GetDescription() == newTask.GetDescription());
+                return (idEquality && descriptionEquality);
+            }
         }
+
 
         public override int GetHashCode()
         {
-             return this.GetId().GetHashCode();
+            return this.GetId().GetHashCode();
         }
     }
 }

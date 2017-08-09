@@ -8,7 +8,7 @@
         <h2>Here are the tasks.</h2>
         @foreach (var task in Model)
         {
-            <h4>@task.GetName() | <a href="/delete/@task.GetId()">Delete this task</a></h4>  
+            <h4>@task.GetDescription() | <a href="/delete/@task.GetId()">Delete this task</a></h4>  
         }
         <hr>
         <h3>Would you like to add a new task?</h3>
