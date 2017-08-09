@@ -21,8 +21,21 @@ namespace MySQLCore.Controllers
         {
             Task newTask = new Task(Request.Form["taskname"]);
             newTask.Save();
-            List<Task> allTasks = Task.GetAll();
-            return View("Index", allTasks);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("/delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            Task thisTask = Task.Find(id);
+            return View("Delete", thisTask);
+        }
+
+        [HttpPost("/delete/{id}")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Task.Delete(id);
+            return RedirectToAction("Index");
         }
 
     }
