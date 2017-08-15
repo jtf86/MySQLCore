@@ -37,7 +37,7 @@ namespace MySQLCore
     }
     public static class DBConfiguration
     {
-      public static string ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=todo;";
+      public static string ConnectionString = "server=mysqlcore-app.cro4sj4aha3d.us-west-2.rds.amazonaws.com;user id=jfranti;password=Epic0dus;port=3306;database=mysqlcore;";
     }
 
 }
