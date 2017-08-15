@@ -7,7 +7,7 @@ namespace MySQLCore.Controllers
     public class HomeController : Controller
     {
 
-// HOME AND VIEW ALL ROUTES
+// HOME AND CREATE ROUTES
 
         [HttpGet("/")]
         public ActionResult Index()
@@ -19,24 +19,27 @@ namespace MySQLCore.Controllers
         [HttpPost("/create")]
         public ActionResult CreateTask()
         {
-            Task newTask = new Task(Request.Form["taskname"]);
+            Task newTask = new Task(Request.Form["taskname"], 1);
             newTask.Save();
-            return RedirectToAction("Index");
+            List<Task> allTasks = Task.GetAll();
+            return View("Index", allTasks);
         }
 
-        [HttpGet("/delete/{id}")]
-        public ActionResult Delete(int id)
+        [HttpGet("/tasks/{id}/edit")]
+        public ActionResult EditTask(int id)
         {
             Task thisTask = Task.Find(id);
-            return View("Delete", thisTask);
+            return View(thisTask);
         }
 
-        [HttpPost("/delete/{id}")]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost("/tasks/{id}/edit")]
+        public ActionResult EditTaskConfirm(int id)
         {
-            Task.Delete(id);
+            Task thisTask = Task.Find(id);
+            thisTask.UpdateDescription(Request.Form["newname"]);
             return RedirectToAction("Index");
         }
+
 
     }
 }
