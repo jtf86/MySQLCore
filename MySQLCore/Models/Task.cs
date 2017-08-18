@@ -71,6 +71,11 @@ namespace MySQLCore.Models
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
 
         public static List<Task> GetAll()
@@ -88,6 +93,11 @@ namespace MySQLCore.Models
               int taskCategoryId = rdr.GetInt32(2);
               Task newTask = new Task(taskDescription, taskCategoryId, taskId);
               allTasks.Add(newTask);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
             }
             return allTasks;
         }
@@ -115,6 +125,12 @@ namespace MySQLCore.Models
               taskCategoryId = rdr.GetInt32(2);
             }
             Task newTask = new Task(taskName, taskCategoryId, taskId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
             return newTask;
         }
 
@@ -136,6 +152,63 @@ namespace MySQLCore.Models
             cmd.Parameters.Add(description);
 
             cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+        }
+
+        public Category GetCategory()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM categories WHERE id = @categoryId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@categoryId";
+            searchId.Value = _categoryId;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int CategoryId = 0;
+            string CategoryName = "";
+
+            while(rdr.Read())
+            {
+              CategoryId = rdr.GetInt32(0);
+              CategoryName = rdr.GetString(1);
+            }
+            Category newCategory = new Category(CategoryName, CategoryId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return newCategory;
+
+        }
+
+        public void Delete()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM tasks WHERE id = @searchId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
 
 
@@ -146,6 +219,11 @@ namespace MySQLCore.Models
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"DELETE FROM tasks;";
             cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
     }
 }

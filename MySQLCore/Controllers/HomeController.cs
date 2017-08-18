@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MySQLCore.Models;
+using System;
 
 namespace MySQLCore.Controllers
 {
@@ -13,18 +14,31 @@ namespace MySQLCore.Controllers
         public ActionResult Index()
         {
             List<Task> allTasks = Task.GetAll();
-            return View(allTasks);
+            List<Category> allCategories = Category.GetAll();
+            Dictionary<string, object> model = new Dictionary<string, object>() {};
+            model.Add("tasks", allTasks);
+            model.Add("categories", allCategories);
+            return View(model);
         }
 
-        [HttpPost("/create")]
+        [HttpPost("/tasks/add")]
         public ActionResult CreateTask()
         {
-            Task newTask = new Task(Request.Form["taskname"], 1);
+            Task newTask = new Task(Request.Form["taskname"], Int32.Parse(Request.Form["taskcategory"]));
             newTask.Save();
-            List<Task> allTasks = Task.GetAll();
-            return View("Index", allTasks);
+            return RedirectToAction("Index");
         }
 
+        [HttpPost("/category/add")]
+        public ActionResult CreateCategory()
+        {
+            Category newCategory = new Category(Request.Form["categoryname"]);
+            newCategory.Save();
+            return RedirectToAction("Index");
+        }
+
+
+        //EDIT ROUTES
         [HttpGet("/tasks/{id}/edit")]
         public ActionResult EditTask(int id)
         {
@@ -39,6 +53,24 @@ namespace MySQLCore.Controllers
             thisTask.UpdateDescription(Request.Form["newname"]);
             return RedirectToAction("Index");
         }
+
+        //DELETE ROUTES
+        [HttpGet("/tasks/{id}/delete")]
+        public ActionResult Delete(int id)
+        {
+            Task task = Task.Find(id);
+            return View(task);
+        }
+
+        [HttpPost("/tasks/{id}/delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Task thisTask = Task.Find(id);
+            thisTask.Delete();
+            return View("DeleteConfirmed", thisTask);
+        }
+
+
 
 
     }

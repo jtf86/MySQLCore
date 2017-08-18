@@ -52,6 +52,11 @@ namespace MySQLCore.Models
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
         public static List<Category> GetAll()
         {
@@ -67,6 +72,11 @@ namespace MySQLCore.Models
               string CategoryName = rdr.GetString(1);
               Category newCategory = new Category(CategoryName, CategoryId);
               allCategories.Add(newCategory);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
             }
             return allCategories;
         }
@@ -92,6 +102,11 @@ namespace MySQLCore.Models
               CategoryName = rdr.GetString(1);
             }
             Category newCategory = new Category(CategoryName, CategoryId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
             return newCategory;
         }
         public List<Task> GetTasks()
@@ -117,6 +132,11 @@ namespace MySQLCore.Models
               Task newTask = new Task(taskDescription, taskCategoryId, taskId);
               allCategoryTasks.Add(newTask);
             }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
             return allCategoryTasks;
         }
 
@@ -127,6 +147,12 @@ namespace MySQLCore.Models
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"DELETE FROM categories;";
             cmd.ExecuteNonQuery();
+ 
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
     }
 }
