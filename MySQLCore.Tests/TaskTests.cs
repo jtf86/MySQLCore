@@ -86,5 +86,69 @@ public class TaskTest : IDisposable
       Assert.AreEqual(testTask, result);
     }
 
+        [TestMethod]
+    public void AddCategory_AddsCategoryToTask_CategoryList()
+    {
+      //Arrange
+      Task testTask = new Task("Mow the lawn");
+      testTask.Save();
+    
+      Category testCategory = new Category("Home stuff");
+      testCategory.Save();
+    
+      //Act
+      testTask.AddCategory(testCategory);
+    
+      List<Category> result = testTask.GetCategories();
+      List<Category> testList = new List<Category>{testCategory};
+    
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+    
+    [TestMethod]
+    public void GetCategories_ReturnsAllTaskCategories_CategoryList()
+    {
+      //Arrange
+      Task testTask = new Task("Mow the lawn");
+      testTask.Save();
+    
+      Category testCategory1 = new Category("Home stuff");
+      testCategory1.Save();
+    
+      Category testCategory2 = new Category("Work stuff");
+      testCategory2.Save();
+    
+      //Act
+      testTask.AddCategory(testCategory1);
+      List<Category> result = testTask.GetCategories();
+      List<Category> testList = new List<Category> {testCategory1};
+    
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void Delete_DeletesTaskAssociationsFromDatabase_TaskList()
+    {
+      //Arrange
+      Category testCategory = new Category("Home stuff");
+      testCategory.Save();
+
+      string testDescription = "Mow the lawn";
+      Task testTask = new Task(testDescription);
+      testTask.Save();
+
+      //Act
+      testTask.AddCategory(testCategory);
+      testTask.Delete();
+
+      List<Task> resultCategoryTasks = testCategory.GetTasks();
+      List<Task> testCategoryTasks = new List<Task> {};
+
+      //Assert
+      CollectionAssert.AreEqual(testCategoryTasks, resultCategoryTasks);
+    }
+
   }
 }

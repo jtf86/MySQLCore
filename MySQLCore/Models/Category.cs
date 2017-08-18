@@ -160,7 +160,6 @@ namespace MySQLCore.Models
                 conn.Dispose();
             }
             return tasks;
-            // return null;
         }
 
         public void Delete()
@@ -168,7 +167,7 @@ namespace MySQLCore.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM categories WHERE id = @searchId;";
+            cmd.CommandText = @"DELETE FROM categories WHERE id = @searchId; DELETE FROM categories_tasks WHERE category_id = @searchId;";
 
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
