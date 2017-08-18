@@ -1,0 +1,49 @@
+
+<h2>Here are the tasks.</h2>
+<table class="table table-striped">
+    <tr class="info">
+        <td> Description </td>
+        <td> Category </td>
+        <td>  </td>
+        <td>  </td>
+    </tr>
+
+@foreach (var task in Model["tasks"])
+{
+    <tr>
+        <td> @task.GetDescription() </td>
+        @if (@task.GetCategory().GetId() != 0) {
+            <td> @task.GetCategory().GetName() </td>
+        } else {
+            <td>n/a</td>
+        }
+        <td> <a href="/tasks/@task.GetId()/delete">Delete this task</a> </td>
+        <td> <a href="/tasks/@task.GetId()/edit">Edit this task</a> </td>
+    </tr>
+}
+
+</table>
+<hr>
+<h3>Would you like to add a new task?</h3>
+<form action="/tasks/add" method="post">
+    <label for="taskname">Add new task</label>
+    <input type="text" name="taskname" value="">
+    <label for="taskcategory">Category</label>
+    <select name="taskcategory">
+        <option value="0">--Please Select a Category--</option>
+        @foreach (var category in Model["categories"])
+        {
+            <option value="@category.GetId()">@category.GetName()</option>
+        }
+    </select>
+    <button type="submit" name="button">Submit</button>
+</form>
+
+<hr>
+<h3>Would you like to add a new category?</h3>
+<form action="/category/add" method="post">
+    <label for="categoryname">Add new category</label>
+    <input type="text" name="categoryname">
+    <button type="submit" name="button">Submit</button>
+</form>
+
