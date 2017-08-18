@@ -8,12 +8,10 @@ namespace MySQLCore.Models
     {
         private string _description;
         private int _id;
-        private int _categoryId;
 
-        public Task(string description, int categoryId, int id = 0)
+        public Task(string description, int id = 0)
         {
             _description = description;
-            _categoryId = categoryId;
             _id = id;
         }
 
@@ -28,8 +26,7 @@ namespace MySQLCore.Models
              Task newTask = (Task) otherTask;
              bool idEquality = this.GetId() == newTask.GetId();
              bool descriptionEquality = this.GetDescription() == newTask.GetDescription();
-             bool categoryEquality = this.GetCategoryId() == newTask.GetCategoryId();
-             return (idEquality && descriptionEquality && categoryEquality);
+             return (idEquality && descriptionEquality);
            }
         }
         public override int GetHashCode()
@@ -46,28 +43,18 @@ namespace MySQLCore.Models
         {
             return _id;
         }
-        public int GetCategoryId()
-        {
-            return _categoryId;
-        }
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO tasks (description, category_id) VALUES (@description, @category_id);";
+            cmd.CommandText = @"INSERT INTO tasks (description) VALUES (@description);";
 
             MySqlParameter description = new MySqlParameter();
             description.ParameterName = "@description";
             description.Value = this._description;
             cmd.Parameters.Add(description);
-
-            MySqlParameter categoryId = new MySqlParameter();
-            categoryId.ParameterName = "@category_id";
-            categoryId.Value = this._categoryId;
-            cmd.Parameters.Add(categoryId);
-
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
@@ -90,8 +77,7 @@ namespace MySQLCore.Models
             {
               int taskId = rdr.GetInt32(0);
               string taskDescription = rdr.GetString(1);
-              int taskCategoryId = rdr.GetInt32(2);
-              Task newTask = new Task(taskDescription, taskCategoryId, taskId);
+              Task newTask = new Task(taskDescription, taskId);
               allTasks.Add(newTask);
             }
             conn.Close();
@@ -116,15 +102,13 @@ namespace MySQLCore.Models
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
             int taskId = 0;
             string taskName = "";
-            int taskCategoryId = 12;
 
             while(rdr.Read())
             {
               taskId = rdr.GetInt32(0);
               taskName = rdr.GetString(1);
-              taskCategoryId = rdr.GetInt32(2);
             }
-            Task newTask = new Task(taskName, taskCategoryId, taskId);
+            Task newTask = new Task(taskName, taskId);
             conn.Close();
             if (conn != null)
             {
@@ -152,42 +136,12 @@ namespace MySQLCore.Models
             cmd.Parameters.Add(description);
 
             cmd.ExecuteNonQuery();
+            _description = newDescription;
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-
-        }
-
-        public Category GetCategory()
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM categories WHERE id = @categoryId;";
-
-            MySqlParameter searchId = new MySqlParameter();
-            searchId.ParameterName = "@categoryId";
-            searchId.Value = _categoryId;
-            cmd.Parameters.Add(searchId);
-
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int CategoryId = 0;
-            string CategoryName = "";
-
-            while(rdr.Read())
-            {
-              CategoryId = rdr.GetInt32(0);
-              CategoryName = rdr.GetString(1);
-            }
-            Category newCategory = new Category(CategoryName, CategoryId);
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return newCategory;
 
         }
 

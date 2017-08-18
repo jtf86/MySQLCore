@@ -88,21 +88,49 @@ namespace MySQLCore.Tests
     }
 
     [TestMethod]
-    public void GetTasks_RetrievesAllTasksWithCategory_TaskList()
+    public void GetTasks_ReturnsAllCategoryTasks_TaskList()
     {
+      //Arrange
       Category testCategory = new Category("Household chores");
       testCategory.Save();
 
-      Task firstTask = new Task("Mow the lawn", testCategory.GetId());
-      firstTask.Save();
-      Task secondTask = new Task("Do the dishes", testCategory.GetId());
-      secondTask.Save();
+      Task testTask1 = new Task("Mow the lawn");
+      testTask1.Save();
+
+      Task testTask2 = new Task("Buy plane ticket");
+      testTask2.Save();
+
+      //Act
+      testCategory.AddTask(testTask1);
+      List<Task> savedTasks = testCategory.GetTasks();
+      List<Task> testList = new List<Task> {testTask1};
+      //Assert
+      CollectionAssert.AreEqual(testList, savedTasks);
+    }
+
+    [TestMethod]
+    public void Test_AddTask_AddsTaskToCategory()
+    {
+      //Arrange
+      Category testCategory = new Category("Household chores");
+      testCategory.Save();
+
+      Task testTask = new Task("Mow the lawn");
+      testTask.Save();
+
+      Task testTask2 = new Task("Water the garden");
+      testTask2.Save();
+
+      //Act
+      testCategory.AddTask(testTask);
+      testCategory.AddTask(testTask2);
+
+      List<Task> result = testCategory.GetTasks();
+      List<Task> testList = new List<Task>{testTask, testTask2};
 
 
-      List<Task> testTaskList = new List<Task> {firstTask, secondTask};
-      List<Task> resultTaskList = testCategory.GetTasks();
-
-      CollectionAssert.AreEqual(testTaskList, resultTaskList);
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
     }
 
 

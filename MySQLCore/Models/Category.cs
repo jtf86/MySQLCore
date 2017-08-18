@@ -111,34 +111,103 @@ namespace MySQLCore.Models
         }
         public List<Task> GetTasks()
         {
-            List<Task> allCategoryTasks = new List<Task> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM tasks WHERE category_id = @category_id;";
+            cmd.CommandText = @"SELECT task_id FROM categories_tasks WHERE category_id = @CategoryId;";
 
-            MySqlParameter categoryId = new MySqlParameter();
-            categoryId.ParameterName = "@category_id";
-            categoryId.Value = this._id;
-            cmd.Parameters.Add(categoryId);
-
+            MySqlParameter categoryIdParameter = new MySqlParameter();
+            categoryIdParameter.ParameterName = "@CategoryId";
+            categoryIdParameter.Value = _id;
+            cmd.Parameters.Add(categoryIdParameter);
 
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+            List<int> taskIds = new List<int> {};
             while(rdr.Read())
             {
-              int taskId = rdr.GetInt32(0);
-              string taskDescription = rdr.GetString(1);
-              int taskCategoryId = rdr.GetInt32(2);
-              Task newTask = new Task(taskDescription, taskCategoryId, taskId);
-              allCategoryTasks.Add(newTask);
+                int taskId = rdr.GetInt32(0);
+                taskIds.Add(taskId);
+            }
+            rdr.Dispose();
+
+            //PROVE IT
+
+            List<Task> tasks = new List<Task> {};
+            foreach (int taskId in taskIds)
+            {
+                var taskQuery = conn.CreateCommand() as MySqlCommand;
+                taskQuery.CommandText = @"SELECT * FROM tasks WHERE id = @TaskId;";
+
+                MySqlParameter taskIdParameter = new MySqlParameter();
+                taskIdParameter.ParameterName = "@TaskId";
+                taskIdParameter.Value = taskId;
+                taskQuery.Parameters.Add(taskIdParameter);
+
+                var taskQueryRdr = taskQuery.ExecuteReader() as MySqlDataReader;
+                while(taskQueryRdr.Read())
+                {
+                    int thisTaskId = taskQueryRdr.GetInt32(0);
+                    string taskDescription = taskQueryRdr.GetString(1);
+                    Task foundTask = new Task(taskDescription, thisTaskId);
+                    tasks.Add(foundTask);
+                }
+                taskQueryRdr.Dispose();
             }
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return allCategoryTasks;
+            return tasks;
+            // return null;
         }
+
+        public void Delete()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM categories WHERE id = @searchId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public void AddTask(Task newTask)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO categories_tasks (category_id, task_id) VALUES (@CategoryId, @TaskId);";
+
+            MySqlParameter category_id = new MySqlParameter();
+            category_id.ParameterName = "@CategoryId";
+            category_id.Value = _id;
+            cmd.Parameters.Add(category_id);
+
+            MySqlParameter task_id = new MySqlParameter();
+            task_id.ParameterName = "@TaskId";
+            task_id.Value = newTask.GetId();
+            cmd.Parameters.Add(task_id);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
 
         public static void DeleteAll()
         {
